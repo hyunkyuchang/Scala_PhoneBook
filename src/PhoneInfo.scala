@@ -23,6 +23,19 @@ class PhoneInfo private (private var name:String, private var addr:String,privat
 object PhoneInfo {
   def apply(name: String, addr: String, phoneNo: String): Option[PhoneInfo] = {
     //check 로직
-    None
+    if(name.isBlank||addr.isBlank||phoneNo.isBlank) {
+      println("필수 값이 비어 있습니다.")
+      None
+    }
+    if(!PhoneInfoFunction.chkPhoneNo(phoneNo)) {
+      println("전화번호 양식이 틀립니다.\n000-0000-0000 형식으로 입력해 주시기 바랍니다.")
+      None
+    }
+    if(!PhoneInfoFunction.phoneBook.contains(phoneNo)) {
+      println("이미 등록된 전화번호 입니다.")
+      None
+    } else{
+      this(name,addr,phoneNo)
+    }
   }
 }
